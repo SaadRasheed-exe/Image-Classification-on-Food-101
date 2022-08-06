@@ -13,6 +13,9 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report, confusion_matrix
+
 import tensorflow as tf
 import tensorflow.python.keras as keras
 import tensorflow.python as tfp
@@ -109,7 +112,40 @@ def create_tensorboard_callback(project_name, experiment_name, dir_path='./'):
     '''
 
     log_dir = os.path.join(dir_path, project_name, experiment_name,
-                           datetime.now().strftime('%Y-%m-%d--%H:%M:%S'))
+                           datetime.now().strftime('%Y-%m-%d--%H%M'))
+    os.makedirs(log_dir)
     tensorboard_callback = callbacks.TensorBoard(log_dir=log_dir)
     print(f"Saving TensorBoard log file to {log_dir}")
     return tensorboard_callback
+
+
+def create_data_subset(src, dest, subset_labels):
+    '''
+    Creates a subset of data stored in the following hierarchy:
+
+    📂source\n
+      ┣ 📂label_1\n
+      ┃ ┣ 📜sample_1\n
+      ┃ ┣ 📜sample_2\n
+      ┃ ┗ ...\n
+      ┣ 📂label_2\n
+      ┃ ┣ 📜sample_1\n
+      ┃ ┣ 📜sample_2\n
+      ┃ ┗ ...\n
+      ┗ ...\n
+
+
+    Args:
+        src_data_dir: path to the source dataset.\n
+        dest_data_dir: path to the destination where the split folders will be stored.\n
+        subset_labels: list of labels selected out of all the labels in original dataset.\n
+        splits: list of sets to create from the original dataset.
+    '''
+
+    if os.path.exists(dest):
+        shutil.rmtree(dest)
+
+    for label in subset_labels:
+        src_path = os.path.join(src, label)
+        dest_path = os.path.join(dest, label)
+        shutil.copytree(src_path, dest_path)
