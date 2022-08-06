@@ -93,3 +93,23 @@ def view_random_image(data_dir, labels, split='train', figsize=(10, 6), n_sample
         plt.imshow(mpimg.imread(path_to_random_image[sample]))
         plt.axis(False)
         plt.title(random_label[sample])
+
+
+def create_tensorboard_callback(project_name, experiment_name, dir_path='./'):
+    '''
+    Creates a tensorboard callback with log files stored at {dir_path + project_name + experiment_name}.
+
+    Args:
+        project_name: Name of your project.\n
+        experiment_name: Name of the experiment you are conducting.\n
+        dir_path: {default: current directory} path to the directory you want to store the log files in.
+
+    Returns:
+        A TensorBoard callback with log directory at {dir_path + project_name + experiment_name}.
+    '''
+
+    log_dir = os.path.join(dir_path, project_name, experiment_name,
+                           datetime.now().strftime('%Y-%m-%d--%H:%M:%S'))
+    tensorboard_callback = callbacks.TensorBoard(log_dir=log_dir)
+    print(f"Saving TensorBoard log file to {log_dir}")
+    return tensorboard_callback
