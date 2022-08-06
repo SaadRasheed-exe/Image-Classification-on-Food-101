@@ -4,11 +4,14 @@ Provides helper functions for data science projects
 
 import os
 import shutil
+import random
+from datetime import datetime
 
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 
 import tensorflow as tf
 import tensorflow.python.keras as keras
@@ -32,10 +35,10 @@ def plot_loss_metrics(history, metrics, validation_metrics=True, all_in_one=Fals
     Plots loss and metric curves from the history object
 
     Args:
-        history: Tensorflow History object.
-        metrics: Metrics to plot curves for other than loss.
-        validation_metrics: {default: True} If False, will not plot metrics for validation data.
-        all_in_one: {default: False} If True, will plot all curves on a single figure.
+        history: Tensorflow History object.\n
+        metrics: Metrics to plot curves for other than loss.\n
+        validation_metrics: {default: True} If False, will not plot metrics for validation data.\n
+        all_in_one: {default: False} If True, will plot all curves on a single figure.\n
         figsize: A tuple holding the figure size to plot on.
     '''
 
@@ -61,3 +64,32 @@ def plot_loss_metrics(history, metrics, validation_metrics=True, all_in_one=Fals
         plt.ylabel(metric)
         plt.xlabel('epochs')
         plt.legend()
+
+
+def view_random_image(data_dir, labels, split='train', figsize=(10, 6), n_samples=1):
+    '''
+    Finds and displays random images from a preprocessed image dataset.
+
+    Args:
+        data_dir: Path to the dataset directory.\n
+        labels: List of labels in the dataset.\n
+        split: {default: 'train'} The set from which to display the image.\n
+        figsize: Size of each image.\n
+        n_samples: Number of images to show.
+    '''
+
+    random_label = []
+    path_to_random_image = []
+
+    for sample in range(n_samples):
+        random_label.append(labels[random.randint(0, len(labels) - 1)])
+        path_to_random_label = os.path.join(
+            data_dir, split, random_label[sample])
+        path_to_random_image.append(os.path.join(
+            path_to_random_label, np.random.choice(os.listdir(path_to_random_label))))
+
+    for sample in range(n_samples):
+        plt.figure(figsize=figsize)
+        plt.imshow(mpimg.imread(path_to_random_image[sample]))
+        plt.axis(False)
+        plt.title(random_label[sample])
