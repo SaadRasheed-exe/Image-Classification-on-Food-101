@@ -149,3 +149,26 @@ def create_data_subset(src, dest, subset_labels):
         src_path = os.path.join(src, label)
         dest_path = os.path.join(dest, label)
         shutil.copytree(src_path, dest_path)
+
+
+def confusion_matrix_heatmap(y_true, y_pred, labels_map=None):
+    '''
+    Displays the heatmap for confusion matrix of the classification results.
+
+    Args:
+        y_true: True labels.
+        y_pred: Predicted labels.
+        labels: Label mappings.
+    '''
+    plt.figure(figsize=(10, 8))
+    s = sns.heatmap(data=confusion_matrix(y_true, y_pred),
+                    annot=True, fmt='g',
+                    linewidths=5,
+                    cmap="Greens")
+    if labels_map is not None:
+        s.set_xticklabels(labels_map)
+        s.set_yticklabels(labels_map)
+    plt.xticks(rotation=90)
+    plt.yticks(rotation=0)
+    plt.xlabel('Predictions', fontsize=20)
+    plt.ylabel('True', fontsize=20)
