@@ -17,18 +17,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 
 import tensorflow as tf
-import tensorflow.python.keras as keras
-import tensorflow.python as tfp
-import tensorflow.python.keras.models as models
-import tensorflow.python.keras.layers as layers
-import tensorflow.python.keras.callbacks as callbacks
-import tensorflow.python.keras.optimizers as optimizers
+import tensorflow.keras as keras
+import tensorflow.keras.models as models
+import tensorflow.keras.layers as layers
+import tensorflow.keras.callbacks as callbacks
+import tensorflow.keras.optimizers as optimizers
 import tensorflow_hub as hub
 
-from tensorflow.python.keras.models import Sequential
-from tensorflow.python.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
-from tensorflow.python.keras.callbacks import EarlyStopping, TensorBoard, LearningRateScheduler
-from tensorflow.python.keras.optimizer_v2.adam import Adam
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, Flatten
+from tensorflow.keras.callbacks import EarlyStopping, TensorBoard, LearningRateScheduler
+from tensorflow.keras.optimizers import Adam
 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
